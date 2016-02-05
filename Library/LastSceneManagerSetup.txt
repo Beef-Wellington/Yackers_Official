@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/scenes/playable mode/UI Yackers.unity
+  isLoaded: 1
+  isActive: 1
