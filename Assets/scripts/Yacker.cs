@@ -13,7 +13,7 @@ public class Yacker : MonoBehaviour
 		//4 - Part 1
 		//5 - Part 2
 	
-	public Image body, outline, part1, part2; 
+	public Image body, outline, part1, part2, backdrop; 
 	public int x, y;
 
 	//Mutators
@@ -23,14 +23,18 @@ public class Yacker : MonoBehaviour
 		body.material = new Material (body.material);
 		body.material.SetTexture("_TextureSlot1", p);
 		body.material.color = bC;
+        body.rectTransform.sizeDelta = new Vector2(100, 100);
+
 		outline.sprite = o;
 		outline.color = oC;
+
 		part1.sprite = p1;
 		part1.color = Color.white;
 		part2.sprite = p2;
 		part2.color = Color.white;
-		changeSize (125);
-	}	
+
+        backdrop.color = Color.clear;
+    }	
 
 	public void setProps(int b, int bC, int p, int oC, int p1, int p2)
 	{

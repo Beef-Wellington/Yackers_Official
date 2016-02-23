@@ -1,17 +1,19 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System;
 
 /* This script is the "Player"
  * It acts as a static holder of all of the different properties and states
  * that handle what the Player can and cannot do
- */ 
+ */
 public class Player : MonoBehaviour 
 {
 	public Text scoreDisplay;
 	public static int score;
-	public static bool canTouch = true;	//Used to prevent the player from touching things during pauses
-	void Start () 
+	public static bool canTouch = true; //Used to prevent the player from touching things during pauses
+
+    void Start () 
 	{
 		score = 0;
 	}

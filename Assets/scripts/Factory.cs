@@ -65,7 +65,7 @@ public class Factory : MonoBehaviour
 		int val3 = Random.Range (0,4); // Outline Color
 		int val4 = Random.Range (0,4); // Part 1
 		int val5 = Random.Range (0,4); // Part 2
-		Debug.Log(val1 + ", " + val2);
+		//Debug.Log(val1 + ", " + val2);
 		yack.setSprites(type.bodies[val0], type.bColors[val1], type.patterns[val2], type.outlines[val0],  type.oColors[val3], type.parts1[val4], type.parts2[val5]);
 		yack.setProps(val0, val1, val2, val3, val4, val5);
 		return yack;

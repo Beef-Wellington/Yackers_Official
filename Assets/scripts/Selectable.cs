@@ -22,13 +22,13 @@ public class Selectable : MonoBehaviour {
 
 	public void Select() {
 		selected = true;
-		//yacker.changeSize (150);
+        yacker.backdrop.color = Color.white;
 		//transform.localScale *= (1f + sizeScale);
 	}
 	public void Deselect()	//Used by the Selector to unTouch a Yacker after a mistake has been made
 	{
 		selected = false;
-		yacker.changeSize (100);
+		
 		//transform.localScale /= (1f + sizeScale);
 	}
 }

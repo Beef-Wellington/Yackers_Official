@@ -42,7 +42,7 @@
              float4 screenPos;
          };
 
-             void surf (Input IN, inout SurfaceOutput o) {
+         void surf (Input IN, inout SurfaceOutput o) {
               
                  //Locks the texture to the screen UVs so it doesn't move when the object does
                  half2 screenUV = IN.screenPos.xy/IN.screenPos.w;

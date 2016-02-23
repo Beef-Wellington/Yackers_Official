@@ -5,12 +5,14 @@ using System.Collections;
 */
 public class ClickStart : MonoBehaviour {
 	public ClickStart next;			//If next is set, another ClickStart object will appear when this one is destroy
+
 	void Start() {
+        Debug.Log("clicker is online");
 		Player.canTouch = false;	//If this object is in the scene, 
 									//the Player, logically,  will not be allowed to touch while it is still up
 	}
 	
-	void OnMouseDown() {
+	public void proceedText() {
 		print("YUP");
 		if(next == null)	//End of the dialogue, start the game!
 			Invoke("kill", .1f);		
@@ -23,6 +25,7 @@ public class ClickStart : MonoBehaviour {
 	
 	void kill() { //This is invoked to prevent the player from selecting the object behind the ClickStart
 		Player.canTouch = true;
+        TimeBar.getInstance().startTimer();
 		Destroy(gameObject);
 	}
 }

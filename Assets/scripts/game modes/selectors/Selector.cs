@@ -17,6 +17,7 @@ public class Selector : MonoBehaviour
 	
 	public List<Yacker> yackersSelected = new List<Yacker>();
 	protected int numYackers = 0;
+    protected int numMatches = 0;
 	int points = 0;
 	
 	public static Selector getInstance() {
@@ -42,7 +43,9 @@ public class Selector : MonoBehaviour
 			for (int x = 0; x < numProps; x++) {
 				matchingProps [x] = true;
 				selectedProps [x] = y.properties [x];
-			}
+                TraitIndicator.get().children[x+1].color = Color.white;
+            }
+            numMatches = matchingProps.Length;
 			yackersSelected.Add (y);
 			y.GetComponent<Selectable> ().Select ();
 			numYackers++;
@@ -52,10 +55,12 @@ public class Selector : MonoBehaviour
 			totalPoints ();
 			// Sets the properties of the selector to equal the number of matching properties
 			for (int x = 0; x < numProps; x++) {
-				if (matchingProps [x] && selectedProps [x] != y.properties [x]) {	//Was matching prior to this new Yacker
+				if (matchingProps [x] && selectedProps [x] != y.properties [x]) {   //Was matching prior to this new Yacker
 					matchingProps [x] = false;
 					selectedProps [x] = -1;
-				}
+                    TraitIndicator.get().children[numMatches].color = Color.grey;
+                    numMatches--;
+                }
 			}
 				
 			if (noMatches ()) { //If NONE of the properties match
@@ -108,15 +113,19 @@ public class Selector : MonoBehaviour
 	
 	///Called by the UI button
 	public virtual void Select() {
-		Debug.Log (numYackers);
-		if(numYackers > 1)
+		//Debug.Log (numYackers);
+        if (numYackers > 1)
 			StartCoroutine(deleteYackers());
 	}
 	
 	///Deletes the Yackers selected in order
 	public virtual IEnumerator deleteYackers() {
-		Player.canTouch = false;													//Can't touch during the deletion process!
-		int pointAmount = points/numYackers;
+		Player.canTouch = false;                                                    //Can't touch during the deletion process!
+        while(numMatches > 0){
+            TraitIndicator.get().children[numMatches].color = Color.grey;
+            numMatches--;
+        }
+        int pointAmount = points/numYackers;
 		while(numYackers > 0) 														//Destroys the previously selected Yackers and resets numYackers
 		{
 			givePoints(pointAmount * 100);//Score is in multiples of 100			//Adds points
@@ -132,11 +141,10 @@ public class Selector : MonoBehaviour
 			hideImg(yackersSelected[numYackers].part1);
 			hideImg(yackersSelected[numYackers].part2);
 			yackersSelected[numYackers].body.rectTransform.sizeDelta = Vector2.zero;
-			yield return new WaitForSeconds(.15f);					
+            yield return new WaitForSeconds(.15f);					
 
 		//	Factory.get().createAt(x, y); 											//Put a yacker at that location
 			Factory.get().shuffle(yackersSelected[numYackers].gameObject); 			//re-shuffle the traits of this yacker
-
 			yackersSelected[numYackers] = null;										//remove this yacker from selected list
 			//yield return new WaitForSeconds(.05f);
 		}
@@ -148,11 +156,6 @@ public class Selector : MonoBehaviour
 	private void hideImg(Image i){
 		i.sprite = null;
 		i.color = Color.clear;
-	}
-
-	public void endGame() {
-		Grid.get().clear();
-        SceneManager.LoadScene("MainMenu");
 	}
 	
 }

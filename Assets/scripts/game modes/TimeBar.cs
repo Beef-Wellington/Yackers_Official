@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+using System;
 
 //Time bar that counts down
 //Time CAN be added to it
@@ -8,13 +10,16 @@ public class TimeBar : MonoBehaviour {
 	public float totalTime;	//In Seconds
 	float timeLeft;
 	float origScale;
+
+    public GameObject GOPanel;
+    public Text finalScore;
 	
 	void Start()
 	{
 		instance = this;
 		timeLeft = totalTime;
 		origScale = transform.localScale.y;
-		startTimer();
+		//startTimer();
 	}
 	
 	public static TimeBar getInstance() {
@@ -32,10 +37,17 @@ public class TimeBar : MonoBehaviour {
 				yield return new WaitForSeconds(1f);
 				timeLeft--;
 		}
-		Selector.getInstance().endGame();
+        endGame();
 	}
-	
-	void Update()
+
+    private void endGame()
+    {
+        Grid.get().clear();
+        finalScore.text += Player.score.ToString();
+        GOPanel.SetActive(true);
+    }
+
+    void Update()
 	{	
 		if(timeLeft >= 0)
 		{
